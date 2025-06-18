@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from collections import defaultdict
 from decimal import Decimal
-
+from app.crud import crud_user
 from app.db import models
 
 def get_group_balances(db: Session, *, group_id: int):
@@ -49,3 +49,37 @@ def get_group_balances(db: Session, *, group_id: int):
             creditors[0] = (creditor_id, new_credit)
             
     return transactions
+
+
+
+
+
+
+
+def get_user_overall_balance(db: Session, *, user_id: int):
+    """
+    Calculates a user's total balance across all groups they are a member of.
+    """
+    user = crud_user.get_or_create_user(db, user_id=user_id)
+    if not user:
+        return None
+
+    total_owed = Decimal(0)
+    total_due = Decimal(0)
+
+    for group in user.groups:
+        group_balances = get_group_balances(db=db, group_id=group.id)
+        
+        for transaction in group_balances:
+            if transaction["ower_id"] == user_id:
+                total_owed += Decimal(transaction["amount"])
+            elif transaction["owee_id"] == user_id:
+                total_due += Decimal(transaction["amount"])
+    
+    net_balance = total_due - total_owed
+
+    return {
+        "total_you_owe": float(total_owed),
+        "total_you_are_owed": float(total_due),
+        "net_balance": float(net_balance)
+    }

@@ -64,3 +64,5 @@ def process_expense(
             db.add(db_split)
 
     db.commit()
+
+
