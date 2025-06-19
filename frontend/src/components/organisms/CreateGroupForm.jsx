@@ -11,6 +11,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 export const CreateGroupForm = () => {
   const [groupName, setGroupName] = useState('');
   const [userIds, setUserIds] = useState('');
+  const [userIdsError, setUserIdsError] = useState(null);
 
  
   const queryClient = useQueryClient();
@@ -25,6 +26,7 @@ export const CreateGroupForm = () => {
       
       setGroupName('');
       setUserIds('');
+      setUserIdsError(null); 
     },
   });
 
@@ -36,6 +38,17 @@ export const CreateGroupForm = () => {
       users: usersArray,
     };
     
+    
+    const hasInvalidId = usersArray.some(id => isNaN(id));
+
+    if (hasInvalidId) {
+      setUserIdsError("User IDs must be comma-separated numbers.");
+      return; 
+    }
+
+    
+    setUserIdsError(null);
+
     mutate(payload);
   };
 
@@ -48,6 +61,7 @@ export const CreateGroupForm = () => {
         label="Group Name"
         value={groupName}
         onChange={(e) => setGroupName(e.target.value)}
+        placeholder="e.g., Goa Trip"
         disabled={isLoading}
         required
       />
@@ -55,10 +69,16 @@ export const CreateGroupForm = () => {
         id="user-ids"
         label="User IDs (comma-separated)"
         value={userIds}
-        onChange={(e) => setUserIds(e.target.value)}
+        onChange={(e) => {
+          setUserIds(e.target.value);
+          setUserIdsError(null); // Clear error as user types
+        }}
+        placeholder="e.g., 101, 102, 103"
         disabled={isLoading}
         required
       />
+      {userIdsError && <p className="text-sm text-red-500 mt-1">{userIdsError}</p>}
+
       <div className="pt-2">
         <Button type="submit" disabled={isLoading}>
           {isLoading ? 'Creating...' : 'Create Group'}

@@ -1,60 +1,31 @@
-import { useState, useEffect } from 'react';
-import { apiGetGroups } from '../../api/groupApi';
+import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-
-
+import { apiGetGroups } from '../../api/groupApi';
 
 export const GroupList = () => {
-  
-  const [groups, setGroups] = useState([]);
-  
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+    const { data: groups, isLoading, isError, error } = useQuery({
+        queryKey: ["groups"],
+        queryFn: apiGetGroups,
+    });
 
-  
-  useEffect(() => {
-    const fetchGroups = async () => {
-      try {
-        
-        setIsLoading(true);
-        setError(null);
-        const data = await apiGetGroups();
-        setGroups(data);
-      // eslint-disable-next-line no-unused-vars
-      } catch (error) {
-        setError('Failed to load groups.');
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    if (isLoading) return <p className="text-gray-400">Loading groups...</p>;
+    if (isError) return <p className="text-red-500">Error: {error.message}</p>;
 
-    fetchGroups();
-  }, []); 
-
- 
-  if (isLoading) {
-    return <p className="text-center text-gray-400">Loading groups...</p>;
-  }
-
-
-  if (error) {
-    return <p className="text-center text-red-500">{error}</p>;
-  }
-
-  return (
-    <div className="w-full max-w-md p-8 space-y-4 bg-gray-800 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold text-center text-white">Existing Groups</h2>
-      {/* ... */}
-      <ul className="space-y-3">
-        {groups.map(group => (
-          // make each list item a link to the group's detail page
-          <Link to={`/group/${group.name}`} key={group.id} className="block"> 
-            <li className="p-4 bg-gray-700 rounded-md text-white font-semibold shadow-md hover:bg-gray-600 transition-colors duration-200">
-              {group.name}
-            </li>
-          </Link>
-        ))}
-      </ul>
-    </div>
-  );
+    return (
+        <ul className="space-y-4">
+            {groups && groups.length > 0 ? (
+                groups.map(group => (
+                    <Link to={`/group/${group.name}`} key={group.id} className="block">
+                        <li className="bg-gray-700 p-4 rounded-md hover:bg-gray-600 transition-colors">
+                            <span className="font-semibold text-lg text-white">
+                                {group.name}
+                            </span>
+                        </li>
+                    </Link>
+                ))
+            ) : (
+                <p className="text-gray-500">No groups found. Create one to get started!</p>
+            )}
+        </ul>
+    );
 };

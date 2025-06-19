@@ -18,8 +18,7 @@ export const AddExpenseForm = ({ groupName }) => {
     mutationFn: apiAddExpenseToGroup,
     onSuccess: () => {
       alert('Expense added successfully!');
-      // when an expense is added, the balances change.
-      // invalidate the balances query to trigger a refetch.
+     
       queryClient.invalidateQueries({ queryKey: ['balances', groupName] });
       // clear form
       setDescription('');

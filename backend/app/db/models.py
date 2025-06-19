@@ -30,9 +30,13 @@ class Expense(Base):
     amount = Column(Numeric(10, 2))
     
     group_id = Column(Integer, ForeignKey("groups.id"))
-    paid_by_user_id = Column(Integer) 
+    
+    paid_by_user_id = Column(Integer, ForeignKey("users.id")) 
 
     group = relationship("Group", back_populates="expenses")
+    
+    paid_by = relationship("User", back_populates="expenses_paid")
+
 
 class User(Base):
     __tablename__ = "users"
@@ -42,7 +46,8 @@ class User(Base):
     groups = relationship(
         "Group", secondary=group_users, back_populates="members"
     )
-
+    
+    expenses_paid = relationship("Expense", back_populates="paid_by")
 
 
 class ExpenseSplit(Base):
