@@ -173,7 +173,7 @@ POST /api/v1/groups/
 
 ### Expense Management
 ```http
-POST /api/v1/groups/{group_name}/expenses/
+POST /api/v1/groups/{group_id}/expenses/
 ```
 ```json
 {
@@ -190,7 +190,7 @@ POST /api/v1/groups/{group_name}/expenses/
 
 ### Balances
 ```http
-GET /api/v1/balances/group/{group_name}
+GET /api/v1/balances/group/{group_id}
 ```
 ```http
 GET /api/v1/users/{user_id}/balances
