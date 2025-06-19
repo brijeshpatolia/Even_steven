@@ -35,7 +35,7 @@ export const Chatbot = ({ isVisible, onClose }) => {
         setMessages(prev => [...prev, { from: 'ai', text: '' }]);
 
         try {
-            const response = await fetch('http://even-steven-jhyx.vercel.app/api/v1/chatbot/', {
+            const response = await fetch('https://even-steven-jhyx.vercel.app/api/v1/chatbot/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ query: userQuery }),
