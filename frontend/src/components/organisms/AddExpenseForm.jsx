@@ -1,26 +1,28 @@
-
+// src/components/organisms/AddExpenseForm.jsx
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { apiAddExpenseToGroup } from '../../api/expensesApi';
+import { addExpense } from '../../api/expensesApi'; // Assuming this is the correct API function
 import { FormField } from '../molecules/FormField';
 import { Button } from '../atoms/Button';
-;
 
-export const AddExpenseForm = ({ groupName }) => {
+// CORRECTED: The component now accepts 'groupId' (a number) as a prop instead of 'groupName'
+export const AddExpenseForm = ({ groupId }) => {
   const queryClient = useQueryClient();
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
   const [paidBy, setPaidBy] = useState('');
   const [splitType, setSplitType] = useState('equal');
-  const [splits, setSplits] = useState(''); // for percentage splits, e.g., "701:60, 702:40"
+  const [splits, setSplits] = useState(''); // for percentage splits, e.g., "101:60, 104:40"
 
   const { mutate, isLoading, error } = useMutation({
-    mutationFn: apiAddExpenseToGroup,
+    mutationFn: addExpense, // This function should handle the API call
     onSuccess: () => {
       alert('Expense added successfully!');
-     
-      queryClient.invalidateQueries({ queryKey: ['balances', groupName] });
-      // clear form
+      
+      // CORRECTED: Use the numerical groupId for query invalidation for better reliability
+      queryClient.invalidateQueries({ queryKey: ['balances', groupId] });
+      
+      // Clear form
       setDescription('');
       setAmount('');
       setPaidBy('');
@@ -38,8 +40,9 @@ export const AddExpenseForm = ({ groupName }) => {
       });
     }
 
+    // CORRECTED: Pass the 'groupId' and expenseData to the mutation
     mutate({
-      groupName,
+      groupId,
       expenseData: {
         description,
         amount: Number(amount),
@@ -66,7 +69,7 @@ export const AddExpenseForm = ({ groupName }) => {
       </div>
 
       {splitType === 'percentage' && (
-        <FormField id="splits" label="Percentage Splits" placeholder="e.g., 701:60, 702:40" value={splits} onChange={(e) => setSplits(e.target.value)} required={splitType === 'percentage'} disabled={isLoading} />
+        <FormField id="splits" label="Percentage Splits" placeholder="e.g., 101:60, 104:40" value={splits} onChange={(e) => setSplits(e.target.value)} required={splitType === 'percentage'} disabled={isLoading} />
       )}
 
       <div className="pt-2">
@@ -74,7 +77,7 @@ export const AddExpenseForm = ({ groupName }) => {
           {isLoading ? 'Adding...' : 'Add Expense'}
         </Button>
       </div>
-      {error && <p className="text-sm text-center text-red-500">{error.detail || 'An error occurred.'}</p>}
+      {error && <p className="text-sm text-center text-red-500">{error.message || 'An error occurred.'}</p>}
     </form>
   );
 };
