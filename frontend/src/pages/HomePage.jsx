@@ -13,18 +13,18 @@ export const HomePage = () => {
       </header>
 
       <main className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Left Column: CreateGroupForm and UserBalanceChecker, stacked and sharing height */}
-        <div className="flex flex-col gap-8"> {/* This is the first grid column */}
-          <div className="flex-1 flex justify-center"> {/* Container for CreateGroupForm, takes half height */}
+        
+        <div className="flex flex-col gap-8"> 
+          <div className="flex-1 flex justify-center"> 
             <CreateGroupForm />
           </div>
-          <div className="flex-1 flex justify-center"> {/* Container for UserBalanceChecker, takes half height */}
+          <div className="flex-1 flex justify-center"> 
             <UserBalanceChecker />
           </div>
         </div>
 
-        {/* Right Column: GroupList */}
-        <div className="flex justify-center"> {/* This is the second grid column */}
+        
+        <div className="flex justify-center"> 
           <GroupList />
         </div>
       </main>

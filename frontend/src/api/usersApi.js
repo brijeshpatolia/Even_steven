@@ -6,7 +6,7 @@ import apiClient from './apiClient';
  * @param {number} userId - the id of the user.
  */
 export const apiGetUserBalances = async (userId) => {
-  // a basic check to ensure we don't call the api with an empty id
+  
   if (!userId) {
     throw new Error('User ID cannot be empty.');
   }

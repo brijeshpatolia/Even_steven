@@ -1,4 +1,4 @@
-// src/api/expensesApi.js
+
 import apiClient from './apiClient';
 
 /**

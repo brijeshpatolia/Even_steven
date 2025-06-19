@@ -1,4 +1,4 @@
-// src/api/balancesApi.js
+
 import apiClient from './apiClient';
 
 /**

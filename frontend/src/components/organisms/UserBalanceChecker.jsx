@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { apiGetUserBalances } from "../../api/usersApi";
 import { Button } from "../atoms/Button";
-import { Input } from "../atoms/input";
+import { Input } from "../atoms/Input";
 
 export const UserBalanceChecker = () => {
   const [userId, setUserId] = useState('');
@@ -44,7 +44,7 @@ export const UserBalanceChecker = () => {
         </div>
       </div>
 
-      {/* display area for the results */}
+      
       <div className="pt-4 min-h-[100px]">
         {error && (
           <p className="text-sm text-center text-red-500">{error}</p>

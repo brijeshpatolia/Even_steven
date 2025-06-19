@@ -5,29 +5,24 @@ import { apiCreateGroup } from "../../api/groupApi";
 
 
 
-/**
- * an organism that provides a full form for creating a new group.
- * it manages its own state and delegates the api call.
- */
+
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const CreateGroupForm = () => {
   const [groupName, setGroupName] = useState('');
   const [userIds, setUserIds] = useState('');
 
-  // 2. get an instance of the query client
+ 
   const queryClient = useQueryClient();
 
-  // 3. set up the mutation
+  
   const { mutate, isLoading, error } = useMutation({
-    mutationFn: apiCreateGroup, // the function to call for the mutation
+    mutationFn: apiCreateGroup,
     onSuccess: () => {
-      // this is the magic part!
-      // it tells tanstack query that the 'groups' query is now out-of-date
-      // and needs to be refetched automatically.
+
       alert('Group created successfully!');
       queryClient.invalidateQueries({ queryKey: ['groups'] });
-      // clear the form
+      
       setGroupName('');
       setUserIds('');
     },
@@ -40,7 +35,7 @@ export const CreateGroupForm = () => {
       name: groupName,
       users: usersArray,
     };
-    // 4. call the 'mutate' function to trigger the api call
+    
     mutate(payload);
   };
 

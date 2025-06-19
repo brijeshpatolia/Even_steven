@@ -3,21 +3,19 @@ import { apiGetGroups } from '../../api/groupApi';
 import { Link } from 'react-router-dom';
 
 
-/**
- * an organism that fetches and displays a list of all groups.
- */
+
 export const GroupList = () => {
-  // state for storing the list of groups
+  
   const [groups, setGroups] = useState([]);
-  // state to handle loading and error ui
+  
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // useEffect hook to fetch data when the component mounts
+  
   useEffect(() => {
     const fetchGroups = async () => {
       try {
-        // reset states
+        
         setIsLoading(true);
         setError(null);
         const data = await apiGetGroups();
@@ -31,14 +29,14 @@ export const GroupList = () => {
     };
 
     fetchGroups();
-  }, []); // the empty array [] means this effect runs only once
+  }, []); 
 
-  // render a loading message while fetching
+ 
   if (isLoading) {
     return <p className="text-center text-gray-400">Loading groups...</p>;
   }
 
-  // render an error message if the fetch failed
+
   if (error) {
     return <p className="text-center text-red-500">{error}</p>;
   }
@@ -50,7 +48,7 @@ export const GroupList = () => {
       <ul className="space-y-3">
         {groups.map(group => (
           // make each list item a link to the group's detail page
-          <Link to={`/group/${group.name}`} key={group.id} className="block"> {/* Add 'block' class */}
+          <Link to={`/group/${group.name}`} key={group.id} className="block"> 
             <li className="p-4 bg-gray-700 rounded-md text-white font-semibold shadow-md hover:bg-gray-600 transition-colors duration-200">
               {group.name}
             </li>

@@ -1,10 +1,10 @@
-// src/components/3-organisms/GroupBalanceDisplay.jsx
+
 import { useQuery } from '@tanstack/react-query';
 import { apiGetGroupBalances } from '../../api/balancesApi';
 
 
 export const GroupBalanceDisplay = ({ groupName }) => {
-  // the queryKey includes the groupName to ensure data is fetched and cached per group.
+  
   const { data: balances, error, isLoading } = useQuery({
     queryKey: ['balances', groupName],
     queryFn: () => apiGetGroupBalances(groupName),

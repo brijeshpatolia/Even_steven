@@ -1,7 +1,7 @@
-// src/App.jsx
+
 import { Routes, Route } from 'react-router-dom';
 import { GroupDetailPage } from './pages/GroupDetailPage';
-import { HomePage } from './pages/HomePage'; // Import HomePage as a named export
+import { HomePage } from './pages/HomePage'; 
 
 
 function App() {

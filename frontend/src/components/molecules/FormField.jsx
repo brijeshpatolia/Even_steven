@@ -1,4 +1,5 @@
-import { Input } from "../atoms/input";
+import { Input } from "../atoms/Input";
+
 
 export const FormField = ({ id, label, ...inputProps }) => {
   return (
