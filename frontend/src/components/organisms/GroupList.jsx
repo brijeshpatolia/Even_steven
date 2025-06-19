@@ -1,3 +1,5 @@
+
+
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { apiGetGroups } from '../../api/groupApi';
@@ -15,7 +17,8 @@ export const GroupList = () => {
         <ul className="space-y-4">
             {groups && groups.length > 0 ? (
                 groups.map(group => (
-                    <Link to={`/group/${group.name}`} key={group.id} className="block">
+                    
+                    <Link to={`/group/${group.id}`} key={group.id} className="block">
                         <li className="bg-gray-700 p-4 rounded-md hover:bg-gray-600 transition-colors">
                             <span className="font-semibold text-lg text-white">
                                 {group.name}

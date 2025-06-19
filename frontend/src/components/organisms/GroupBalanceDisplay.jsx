@@ -1,6 +1,7 @@
 // src/components/organisms/GroupBalanceDisplay.jsx
 import { useQuery } from '@tanstack/react-query';
-import { getGroupBalances } from '../../api/balancesApi'; // Assuming this is the correct API function
+import { apiGetGroupBalances } from '../../api/balancesApi';
+ // Assuming this is the correct API function
 
 // CORRECTED: The component now accepts 'groupId' (a number) as a prop
 export const GroupBalanceDisplay = ({ groupId }) => {
@@ -8,7 +9,7 @@ export const GroupBalanceDisplay = ({ groupId }) => {
   // CORRECTED: The query now uses the numerical groupId for both the key and the API call
   const { data: balances, error, isLoading } = useQuery({
     queryKey: ['balances', groupId],
-    queryFn: () => getGroupBalances(groupId),
+    queryFn: () => apiGetGroupBalances(groupId),
     // The query will only run if groupId is a valid number
     enabled: !!groupId, 
   });

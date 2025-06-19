@@ -1,3 +1,4 @@
+# backend/app/api/endpoints/balances.py
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
@@ -10,15 +11,16 @@ from app.crud import crud_group
 
 router = APIRouter()
 
-@router.get("/group/{group_name}", response_model=List[Balance])
+@router.get("/group/{group_id}", response_model=List[Balance])
 def read_group_balances(
-    group_name: str,
+    group_id: int,
     db: Session = Depends(get_db)
 ):
     """
-    Retrieve simplified balances for a specific group by name.
+    Retrieve simplified balances for a specific group by ID.
     """
-    group = crud_group.get_group_by_name(db, name=group_name)
+    # Fetch group by ID
+    group = crud_group.get_group(db, group_id=group_id)
     if not group:
         raise HTTPException(status_code=404, detail="Group not found")
         

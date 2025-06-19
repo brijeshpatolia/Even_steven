@@ -1,9 +1,10 @@
 // src/components/organisms/AddExpenseForm.jsx
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { addExpense } from '../../api/expensesApi'; // Assuming this is the correct API function
+ // Assuming this is the correct API function
 import { FormField } from '../molecules/FormField';
 import { Button } from '../atoms/Button';
+import { apiAddExpenseToGroup } from '../../api/expensesApi';
 
 // CORRECTED: The component now accepts 'groupId' (a number) as a prop instead of 'groupName'
 export const AddExpenseForm = ({ groupId }) => {
@@ -15,7 +16,7 @@ export const AddExpenseForm = ({ groupId }) => {
   const [splits, setSplits] = useState(''); // for percentage splits, e.g., "101:60, 104:40"
 
   const { mutate, isLoading, error } = useMutation({
-    mutationFn: addExpense, // This function should handle the API call
+    mutationFn: apiAddExpenseToGroup, // This function should handle the API call
     onSuccess: () => {
       alert('Expense added successfully!');
       
