@@ -5,7 +5,7 @@
 
 # Even_Steven - Splitwise Clone
 
-**Even_Steven** is a full-stack expense sharing app (like Splitwise) built as part of the Neurix Full-Stack SDE Intern assignment. It allows users to create groups, log shared expenses, and calculate who owes whom, with a modern frontend and robust backend.
+**Even_Steven** is a full-stack expense sharing app (like Splitwise) built as part of the Neurix Full-Stack SDE Intern assignment. It allows users to create groups, log shared expenses, and calculate who owes whom, with a modern frontend and robust backend with chatbot functionality .
 
 ## Tech Stack
 
