@@ -1,7 +1,11 @@
+## web-app is live :- https://even-steven.vercel.app
+
+
+
 
 # Even_Steven - Splitwise Clone
 
-**Even_Steven** is a full-stack expense sharing app (like Splitwise) built as part of the Neurix Full-Stack SDE Intern assignment. It allows users to create groups, log shared expenses, and calculate who owes whom, with a modern frontend and robust backend.
+**Even_Steven** is a full-stack expense sharing app (like Splitwise) built as part of the Neurix Full-Stack SDE Intern assignment. It allows users to create groups, log shared expenses, and calculate who owes whom, with a modern frontend and robust backend with chatbot functionality .
 
 ## Tech Stack
 
@@ -169,7 +173,7 @@ POST /api/v1/groups/
 
 ### Expense Management
 ```http
-POST /api/v1/groups/{group_name}/expenses/
+POST /api/v1/groups/{group_id}/expenses/
 ```
 ```json
 {
@@ -186,7 +190,7 @@ POST /api/v1/groups/{group_name}/expenses/
 
 ### Balances
 ```http
-GET /api/v1/balances/group/{group_name}
+GET /api/v1/balances/group/{group_id}
 ```
 ```http
 GET /api/v1/users/{user_id}/balances

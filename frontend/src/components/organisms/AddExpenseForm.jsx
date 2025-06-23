@@ -1,7 +1,6 @@
-// src/components/organisms/AddExpenseForm.jsx
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
- // Assuming this is the correct API function
+
 import { FormField } from '../molecules/FormField';
 import { Button } from '../atoms/Button';
 import { apiAddExpenseToGroup } from '../../api/expensesApi';
@@ -20,7 +19,6 @@ export const AddExpenseForm = ({ groupId }) => {
     onSuccess: () => {
       alert('Expense added successfully!');
       
-      // CORRECTED: Use the numerical groupId for query invalidation for better reliability
       queryClient.invalidateQueries({ queryKey: ['balances', groupId] });
       
       // Clear form
@@ -41,7 +39,6 @@ export const AddExpenseForm = ({ groupId }) => {
       });
     }
 
-    // CORRECTED: Pass the 'groupId' and expenseData to the mutation
     mutate({
       groupId,
       expenseData: {
@@ -57,9 +54,9 @@ export const AddExpenseForm = ({ groupId }) => {
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-md p-8 space-y-4 bg-gray-800 rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold text-center text-white">Add New Expense</h2>
-      <FormField id="description" label="Description" value={description} onChange={(e) => setDescription(e.target.value)} required disabled={isLoading} />
-      <FormField id="amount" label="Amount" type="number" value={amount} onChange={(e) => setAmount(e.target.value)} required disabled={isLoading} />
-      <FormField id="paidBy" label="Paid by User ID" type="number" value={paidBy} onChange={(e) => setPaidBy(e.target.value)} required disabled={isLoading} />
+      <FormField id="description" label="Description" placeholder="e.g., Dinner, Movie tickets" value={description} onChange={(e) => setDescription(e.target.value)} required disabled={isLoading} />
+      <FormField id="amount" label="Amount" type="number" placeholder="e.g., 100" value={amount} onChange={(e) => setAmount(e.target.value)} required disabled={isLoading} />
+      <FormField id="paidBy" label="Paid by User ID" placeholder="e.g., 101" type="number" value={paidBy} onChange={(e) => setPaidBy(e.target.value)} required disabled={isLoading} />
 
       <div>
         <label htmlFor="splitType" className="block mb-2 text-sm font-medium text-gray-400">Split Type</label>
