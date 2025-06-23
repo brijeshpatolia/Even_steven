@@ -25,6 +25,14 @@ def create_expense_for_group(
     if not group:
         raise HTTPException(status_code=404, detail=f"Group with ID {group_id} not found")
 
+    # VALIDATION: Check if the paying user is a member of the group.
+    member_ids = {member.id for member in group.members}
+    if expense_in.paid_by_user_id not in member_ids:
+        raise HTTPException(
+            status_code=400,
+            detail=f"User {expense_in.paid_by_user_id} is not a member of the group and cannot pay for an expense."
+        )
+
     expense = crud_expense.create_expense(
         db=db, expense_in=expense_in, group_id=group.id
     )
