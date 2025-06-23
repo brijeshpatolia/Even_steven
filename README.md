@@ -112,6 +112,7 @@ npm run dev
 ```
 
 Frontend will run at: `http://localhost:5173`
+### plz change the base url in the frontend/src/api/apiClient  to  'http://localhost:8000/api/v1'
 
 ## Features
 
