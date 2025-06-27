@@ -12,7 +12,8 @@ app = FastAPI(title="Even_Steven")
 
 origins = [
     "https://even-steven.vercel.app",  
-    "http://localhost:3000",         
+    "http://localhost:3000", 
+    "*"
 ]
 
 app.add_middleware(
