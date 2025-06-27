@@ -11,8 +11,7 @@ app = FastAPI(title="Even_Steven")
 
 
 origins = [
-    "https://even-steven.vercel.app",  
-    "http://localhost:3000", 
+   
     "*"
 ]
 
