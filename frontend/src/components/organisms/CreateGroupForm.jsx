@@ -55,7 +55,6 @@ export const CreateGroupForm = () => {
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-md p-8 space-y-4 bg-gray-800 rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold text-center text-white">Create a New Group</h2>
-      {/* the rest of the jsx is the same, but now uses 'isLoading' and 'error' from useMutation */}
       <FormField
         id="group-name"
         label="Group Name"
@@ -71,7 +70,7 @@ export const CreateGroupForm = () => {
         value={userIds}
         onChange={(e) => {
           setUserIds(e.target.value);
-          setUserIdsError(null); // Clear error as user types
+          setUserIdsError(null); 
         }}
         placeholder="e.g., 101, 102, 103"
         disabled={isLoading}

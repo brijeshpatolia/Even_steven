@@ -4,11 +4,11 @@ from app.core.config import settings
 from app.db import models
 from collections.abc import Generator
 
-# Configure the OpenAI client
+
 client = openai.OpenAI(api_key=settings.OPENAI_API_KEY)
 
 def get_context_for_llm(db: Session) -> str:
-    # This function remains the same as before
+    
     context_parts = []
     users = db.query(models.User).all()
     if users:
@@ -33,12 +33,9 @@ def get_context_for_llm(db: Session) -> str:
                 )
     return "\n".join(context_parts)
 
-# NEW STREAMING GENERATOR FUNCTION
+
 def get_chatbot_response_stream(db: Session, query: str) -> Generator[str, None, None]:
-    """
-    Generates a streamed response to a user query using an LLM.
-    This function is a generator that yields text chunks.
-    """
+
     context = get_context_for_llm(db)
     prompt = f"""
     You are an AI assistant for a split-expense application called "Even Steven".
@@ -56,9 +53,9 @@ def get_chatbot_response_stream(db: Session, query: str) -> Generator[str, None,
     """
 
     try:
-        # Set stream=True to get a streaming response from OpenAI
+        
         stream = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant for an expense-splitting app."},
                 {"role": "user", "content": prompt}
@@ -66,11 +63,14 @@ def get_chatbot_response_stream(db: Session, query: str) -> Generator[str, None,
             stream=True, 
         )
         
-        # Yield each chunk of content as it arrives
+       
         for chunk in stream:
             content = chunk.choices[0].delta.content
             if content:
                 yield content
+
+
+                
 
     except Exception as e:
         print(f"Error calling OpenAI API: {e}")

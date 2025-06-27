@@ -5,23 +5,22 @@ import { FormField } from '../molecules/FormField';
 import { Button } from '../atoms/Button';
 import { apiAddExpenseToGroup } from '../../api/expensesApi';
 
-// CORRECTED: The component now accepts 'groupId' (a number) as a prop instead of 'groupName'
 export const AddExpenseForm = ({ groupId }) => {
   const queryClient = useQueryClient();
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
   const [paidBy, setPaidBy] = useState('');
   const [splitType, setSplitType] = useState('equal');
-  const [splits, setSplits] = useState(''); // for percentage splits, e.g., "101:60, 104:40"
+  const [splits, setSplits] = useState(''); 
 
   const { mutate, isLoading, error } = useMutation({
-    mutationFn: apiAddExpenseToGroup, // This function should handle the API call
+    mutationFn: apiAddExpenseToGroup, 
     onSuccess: () => {
       alert('Expense added successfully!');
       
       queryClient.invalidateQueries({ queryKey: ['balances', groupId] });
       
-      // Clear form
+     
       setDescription('');
       setAmount('');
       setPaidBy('');

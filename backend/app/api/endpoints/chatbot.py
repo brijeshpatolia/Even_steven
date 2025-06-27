@@ -18,7 +18,7 @@ def handle_chat_query(
     """
     Receives a user query and returns a streamed response from the chatbot service.
     """
-    # 2. Call the new generator function and return a StreamingResponse
+    
     return StreamingResponse(
         chatbot_service.get_chatbot_response_stream(db=db, query=chat_query.query),
         media_type="text/event-stream"
