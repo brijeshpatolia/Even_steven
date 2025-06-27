@@ -16,7 +16,7 @@ def get_context_for_llm(db: Session) -> str:
         context_parts.append(f"Users in the system: {user_list}")
     groups = db.query(models.Group).options(
         joinedload(models.Group.members),
-        joinedload(models.Group.expenses).joinedload(models.Expense.paid_by)
+        joinedload(models.Group.expenses).joinedload(models.Expense.paid_by).joinedload(models.ExpenseSplit.user)
     ).all()
     context_parts.append("\n--- DATA ---")
     for group in groups:
