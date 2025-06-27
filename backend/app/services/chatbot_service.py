@@ -16,7 +16,8 @@ def get_context_for_llm(db: Session) -> str:
         context_parts.append(f"Users in the system: {user_list}")
     groups = db.query(models.Group).options(
         joinedload(models.Group.members),
-        joinedload(models.Group.expenses).joinedload(models.Expense.paid_by).joinedload(models.ExpenseSplit.user)
+        joinedload(models.Group.expenses).joinedload(models.Expense.paid_by),
+        joinedload(models.Group.expenses).joinedload(models.Expense.splits).joinedload(models.ExpenseSplit.user),
     ).all()
     context_parts.append("\n--- DATA ---")
     for group in groups:
@@ -31,6 +32,11 @@ def get_context_for_llm(db: Session) -> str:
                 context_parts.append(
                     f"    - '{expense.description}' for ${expense.amount:.2f}, paid by {expense.paid_by.name}."
                 )
+                if expense.splits:
+                    split_details = []
+                    for split in expense.splits:
+                        split_details.append(f"{split.user.name} owes ${split.amount_owed:.2f}")
+                    context_parts.append(f"      - Split: {'; '.join(split_details)}.")
     return "\n".join(context_parts)
 
 
